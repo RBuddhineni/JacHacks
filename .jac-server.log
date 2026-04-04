@@ -1,0 +1,73 @@
+bash: line 1: pkill: command not found
+
+  📦 Installing watchdog (required for --dev mode)...
+
+✔ Installation complete:
+  ✓ watchdog-6.0.0
+✔ watchdog installed
+✖ Error: Warning: Initial client compilation failed: Failed to compile 'main.jac' for client bundle:components/relistDashboard.cl.jac, line 89, col 44: Missing '}'
+components/relistDashboard.cl.jac, line 89, col 44: Expected '</', got 'STRING'
+components/relistDashboard.cl.jac, line 89, col 63: Expected 'JSX_NAME', got ':'
+components/relistDashboard.cl.jac, line 89, col 65: Expected 'JSX_TAG_END', got 'STRING'
+components/relistDashboard.cl.jac, line 89, col 87: Expected '</', got '}'
+components/relistDashboard.cl.jac, line 89, col 88: Expected 'JSX_NAME', got 'JSX_TEXT'
+components/relistDashboard.cl.jac, line 90, col 29: Expected 'JSX_TAG_END', got '</'
+components/relistDashboard.cl.jac, line 90, col 31: Expected '</', got 'JSX_NAME'
+components/relistDashboard.cl.jac, line 90, col 37: Expected 'JSX_NAME', got 'JSX_TAG_END'
+components/relistDashboard.cl.jac, line 90, col 38: Expected 'JSX_TAG_END', got 'JSX_TEXT'
+components/relistDashboard.cl.jac, line 98, col 27: Missing ')'
+components/relistDashboard.cl.jac, line 98, col 27: Missing ';'
+components/relistDashboard.cl.jac, line 98, col 27: Unexpected token in expression: 'JSX_TEXT'
+components/relistDashboard.cl.jac, line 100, col 17: Missing ';'
+components/relistDashboard.cl.jac, line 124, col 27: Missing ';'
+components/relistDashboard.cl.jac, line 124, col 27: Unexpected token in expression: 'JSX_TEXT'
+components/relistDashboard.cl.jac, line 126, col 17: Missing ';'
+components/relistDashboard.cl.jac, line 194, col 27: Missing ';'
+components/relistDashboard.cl.jac, line 194, col 27: Unexpected token in expression: 'JSX_TEXT'
+components/relistDashboard.cl.jac, line 195, col 13: Missing ';'
+components/relistDashboard.cl.jac, line 195, col 13: Unexpected token in expression: '</'
+components/relistDashboard.cl.jac, line 195, col 15: Missing ';'
+components/relistDashboard.cl.jac, line 195, col 15: Unexpected token in expression: 'JSX_NAME'
+components/relistDashboard.cl.jac, line 195, col 18: Missing ';'
+components/relistDashboard.cl.jac, line 195, col 18: Unexpected token in expression: 'JSX_TAG_END'
+components/relistDashboard.cl.jac, line 195, col 19: Missing ';'
+components/relistDashboard.cl.jac, line 195, col 19: Unexpected token in expression: 'JSX_TEXT'
+components/relistDashboard.cl.jac, line 196, col 9: Missing ';'
+components/relistDashboard.cl.jac, line 196, col 9: Unexpected token in expression: '</'
+components/relistDashboard.cl.jac, line 196, col 11: Missing ';'
+components/relistDashboard.cl.jac, line 196, col 11: Unexpected token in expression: 'JSX_NAME'
+components/relistDashboard.cl.jac, line 196, col 15: Missing ';'
+components/relistDashboard.cl.jac, line 196, col 15: Unexpected token in expression: 'JSX_TAG_END'
+components/relistDashboard.cl.jac, line 197, col 5: Missing ';'
+components/relistDashboard.cl.jac, line 197, col 5: Unexpected token in expression: ')'
+⚠   ⚠ Vite server may not be ready (timeout after 60s)
+INFO - Admin portal endpoints registered at /admin
+INFO - LLM telemetry: litellm CustomLogger registered
+INFO - LLM telemetry: byllm agent callback registered
+INFO - LLM telemetry endpoints registered: /admin/llm/telemetry/{summary,traces,traces/{id},filters}
+  Port 8001 is in use, using port 8005 instead
+
+  JAC DEV SERVER v0.13.3
+
+  ➜  Local:     http://localhost:8005/
+  ➜  Network:   http://192.168.54.221:8005/
+
+  🚀 Server ready
+
+  JAC DEV SERVER v0.13.3
+
+  ➜  Local:     http://localhost:8005/
+  ➜  Network:   http://192.168.54.221:8005/
+
+  🚀 Server ready
+
+  Mode: Development (with HMR)
+    Vite:  http://localhost:8000/
+    API:   http://localhost:8005/
+
+👀 Watching for changes...
+   Monitoring: **/*.jac (5 files)
+
+✔ Recompiled: ./components/pivotScreen.cl.jac -> pivotScreen.js
+✔ Recompiled: ./main.jac -> main.js
+✔ Copied: styles/global.css
