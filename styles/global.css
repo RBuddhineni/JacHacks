@@ -1,36 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 @import "tailwindcss";
 
 @theme {
-  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
-  --color-background: #f8fafc;
-  --color-foreground: #0f172a;
-  --color-card: #ffffff;
-  --color-muted-foreground: #64748b;
-  --color-border: #e2e8f0;
-  --shadow-soft: 0 8px 30px rgba(15, 23, 42, 0.08);
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    --color-background: #06111f;
+    --color-foreground: #eff6ff;
+    --color-card: #0d1b2f;
+    --color-card-hover: #13243d;
+    --color-primary: #38bdf8;
+    --color-primary-foreground: #03111d;
+    --color-muted: #10233a;
+    --color-muted-foreground: #9fb4cb;
+    --color-border: #21405f;
+    --color-destructive: #fb7185;
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
+
+    --shadow-soft: 0 10px 30px rgba(2, 12, 27, 0.28);
+    --shadow-card: 0 18px 50px rgba(3, 10, 24, 0.42);
+
+    --radius-sm: 0.5rem;
+    --radius-md: 0.875rem;
+    --radius-lg: 1.5rem;
+    --radius-full: 9999px;
 }
 
 .dark {
-  --color-background: #020617;
-  --color-foreground: #f8fafc;
-  --color-card: #0f172a;
-  --color-muted-foreground: #94a3b8;
-  --color-border: #1e293b;
+    --color-background: #020817;
+    --color-foreground: #f8fbff;
+    --color-card: #0b1628;
+    --color-card-hover: #122038;
+    --color-primary: #67e8f9;
+    --color-primary-foreground: #06202b;
+    --color-muted: #0f1d31;
+    --color-muted-foreground: #a9bdd2;
+    --color-border: #1f3550;
 }
 
 html, body, #root {
-  min-height: 100vh;
+    min-height: 100vh;
+}
+
+html {
+    background: var(--color-background);
 }
 
 body {
-  margin: 0;
-  background: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    background:
+        radial-gradient(circle at top, rgba(56, 189, 248, 0.18), transparent 34%),
+        linear-gradient(180deg, #07111f 0%, #040b16 100%);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+video {
+    max-width: 100%;
 }

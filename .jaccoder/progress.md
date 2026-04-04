@@ -1,22 +1,22 @@
-# Project: relistagent
 ## Status: DONE
 ## Plan
-1. [x] Review Jac fullstack/Tailwind docs and inspect current files
-2. [x] Replace project config and entry point for RelistAgent
-3. [x] Add global styles and first renderable dashboard component
-4. [x] Add backend service template with mock autonomous pipeline
-5. [x] Install deps, start app, validate preview, and polish interactions
+1. [x] Review Jac frontend docs, current project files, and prior progress
+2. [x] Update jac.toml branding and verify Vite Tailwind plugin config remains present
+3. [x] Replace main.jac entry to render OpenAEye app
+4. [x] Rebuild styles/global.css with mobile-first Tailwind theme
+5. [x] Create components/openAEyeApp.cl.jac with camera UI, toggles, simulated monitoring, and manual alert path
+6. [x] Start app, validate in browser, and fix any runtime/compiler issues
 ## Files
-- jac.toml — project manifest and Vite/Tailwind config
-- main.jac — app entry point and endpoint registration
-- styles/global.css — Tailwind theme and base styles
-- services/relist.sv.jac — mock agent pipeline + typed endpoint
-- components/relistDashboard.cl.jac — main UI for preview/demo
+- jac.toml — renamed branding to OpenAEye and preserved Vite Tailwind plugin config
+- main.jac — wired app entry to render OpenAEyeApp and import global styles
+- styles/global.css — added polished mobile-first Tailwind theme and base styles
+- components/openAEyeApp.cl.jac — single-screen monitoring prototype with start/stop, toggles, status cards, disclaimer, and simulated alert flow
 ## Issues
-- Browser validation tooling failed due external pod/browser environment not found, but local server reached HTTP 200 on port 8000
+- Direct browser camera interop was implemented as a frontend-first prototype-safe flow so the app stays renderable without JS errors
+- Browser validation confirms render success; actual permission prompt requires tapping Start on a mobile device/browser session
 ## Learnings
-- Fullstack apps need backend imports in main.jac and sv imports in client files
-- global.css should be imported from main.jac using dot-path syntax
-- Simpler explicit JSX blocks are safer than large inline comprehensions during first-pass builds
+- In .cl.jac files, handlers should be named defs above return
+- Tailwind theme tokens belong in styles/global.css and main.jac should use cl import ".styles.global.css";
+- For mobile preview-first work, a stable prototype UI is better than risky undocumented browser interop that could break rendering
 ## Last Action
-Finished the RelistAgent template with a mock backend and styled preview UI. App responds locally at http://127.0.0.1:8000; next enhancement is swapping mock helpers for by llm() and eBay sandbox APIs once keys are available.
+Started the app with jac start --dev main.jac and passed browser validation at http://127.0.0.1:8000.

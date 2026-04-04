@@ -1,8 +1,8 @@
-cl import from .components.pivotScreen { PivotScreen }
 cl import ".styles.global.css";
+cl import from .components.openAEyeApp { OpenAEyeApp }
 
 cl {
     def:pub app() -> JsxElement {
-        return <PivotScreen />;
+        return <OpenAEyeApp />;
     }
 }

@@ -1,7 +1,6 @@
-[project]
-name = "relistagent"
+name = "openaeye"
 version = "1.0.0"
-description = "RelistAgent — agentic AI reselling assistant built in Jac"
+description = "OpenAEye — mobile-first Jac hazard monitoring prototype"
 entry-point = "main.jac"
 
 [dependencies]
@@ -27,3 +26,7 @@ default_model = "claude-sonnet-4-6"
 
 [serve]
 base_route_app = "app"
+
+[jacpack]
+name = 'prj_1775327373230'
+description = 'Jac IDE snapshot for prj_1775327373230'

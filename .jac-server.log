@@ -1,73 +1,584 @@
-bash: line 1: pkill: command not found
-
-  📦 Installing watchdog (required for --dev mode)...
-
-✔ Installation complete:
-  ✓ watchdog-6.0.0
-✔ watchdog installed
-✖ Error: Warning: Initial client compilation failed: Failed to compile 'main.jac' for client bundle:components/relistDashboard.cl.jac, line 89, col 44: Missing '}'
-components/relistDashboard.cl.jac, line 89, col 44: Expected '</', got 'STRING'
-components/relistDashboard.cl.jac, line 89, col 63: Expected 'JSX_NAME', got ':'
-components/relistDashboard.cl.jac, line 89, col 65: Expected 'JSX_TAG_END', got 'STRING'
-components/relistDashboard.cl.jac, line 89, col 87: Expected '</', got '}'
-components/relistDashboard.cl.jac, line 89, col 88: Expected 'JSX_NAME', got 'JSX_TEXT'
-components/relistDashboard.cl.jac, line 90, col 29: Expected 'JSX_TAG_END', got '</'
-components/relistDashboard.cl.jac, line 90, col 31: Expected '</', got 'JSX_NAME'
-components/relistDashboard.cl.jac, line 90, col 37: Expected 'JSX_NAME', got 'JSX_TAG_END'
-components/relistDashboard.cl.jac, line 90, col 38: Expected 'JSX_TAG_END', got 'JSX_TEXT'
-components/relistDashboard.cl.jac, line 98, col 27: Missing ')'
-components/relistDashboard.cl.jac, line 98, col 27: Missing ';'
-components/relistDashboard.cl.jac, line 98, col 27: Unexpected token in expression: 'JSX_TEXT'
-components/relistDashboard.cl.jac, line 100, col 17: Missing ';'
-components/relistDashboard.cl.jac, line 124, col 27: Missing ';'
-components/relistDashboard.cl.jac, line 124, col 27: Unexpected token in expression: 'JSX_TEXT'
-components/relistDashboard.cl.jac, line 126, col 17: Missing ';'
-components/relistDashboard.cl.jac, line 194, col 27: Missing ';'
-components/relistDashboard.cl.jac, line 194, col 27: Unexpected token in expression: 'JSX_TEXT'
-components/relistDashboard.cl.jac, line 195, col 13: Missing ';'
-components/relistDashboard.cl.jac, line 195, col 13: Unexpected token in expression: '</'
-components/relistDashboard.cl.jac, line 195, col 15: Missing ';'
-components/relistDashboard.cl.jac, line 195, col 15: Unexpected token in expression: 'JSX_NAME'
-components/relistDashboard.cl.jac, line 195, col 18: Missing ';'
-components/relistDashboard.cl.jac, line 195, col 18: Unexpected token in expression: 'JSX_TAG_END'
-components/relistDashboard.cl.jac, line 195, col 19: Missing ';'
-components/relistDashboard.cl.jac, line 195, col 19: Unexpected token in expression: 'JSX_TEXT'
-components/relistDashboard.cl.jac, line 196, col 9: Missing ';'
-components/relistDashboard.cl.jac, line 196, col 9: Unexpected token in expression: '</'
-components/relistDashboard.cl.jac, line 196, col 11: Missing ';'
-components/relistDashboard.cl.jac, line 196, col 11: Unexpected token in expression: 'JSX_NAME'
-components/relistDashboard.cl.jac, line 196, col 15: Missing ';'
-components/relistDashboard.cl.jac, line 196, col 15: Unexpected token in expression: 'JSX_TAG_END'
-components/relistDashboard.cl.jac, line 197, col 5: Missing ';'
-components/relistDashboard.cl.jac, line 197, col 5: Unexpected token in expression: ')'
-⚠   ⚠ Vite server may not be ready (timeout after 60s)
-INFO - Admin portal endpoints registered at /admin
-INFO - LLM telemetry: litellm CustomLogger registered
-INFO - LLM telemetry: byllm agent callback registered
-INFO - LLM telemetry endpoints registered: /admin/llm/telemetry/{summary,traces,traces/{id},filters}
-  Port 8001 is in use, using port 8005 instead
-
-  JAC DEV SERVER v0.13.3
-
-  ➜  Local:     http://localhost:8005/
-  ➜  Network:   http://192.168.54.221:8005/
-
-  🚀 Server ready
-
-  JAC DEV SERVER v0.13.3
-
-  ➜  Local:     http://localhost:8005/
-  ➜  Network:   http://192.168.54.221:8005/
-
-  🚀 Server ready
-
-  Mode: Development (with HMR)
-    Vite:  http://localhost:8000/
-    API:   http://localhost:8005/
-
-👀 Watching for changes...
-   Monitoring: **/*.jac (5 files)
-
-✔ Recompiled: ./components/pivotScreen.cl.jac -> pivotScreen.js
-✔ Recompiled: ./main.jac -> main.js
-✔ Copied: styles/global.css
+✖ Error: error[E0002]: Missing '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:112:51
+  110 |                         </div>
+  111 |                         <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
+  112 |                             {prototype_ai_ready ? "AI vision ready next" : "Prototype only"}
+      |                                                   ^^^^^^^^^^^^^^^^^^^^^^
+  113 |                         </div>
+  114 |                     </div>
+✖ Error: error[E0001]: Expected '</', got 'STRING'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:112:51
+  110 |                         </div>
+  111 |                         <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
+  112 |                             {prototype_ai_ready ? "AI vision ready next" : "Prototype only"}
+      |                                                   ^^^^^^^^^^^^^^^^^^^^^^
+  113 |                         </div>
+  114 |                     </div>
+✖ Error: error[E0001]: Expected 'JSX_NAME', got ':'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:112:74
+  110 |                         </div>
+  111 |                         <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
+  112 |                             {prototype_ai_ready ? "AI vision ready next" : "Prototype only"}
+      |                                                                          ^
+  113 |                         </div>
+  114 |                     </div>
+✖ Error: error[E0001]: Expected 'JSX_TAG_END', got 'STRING'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:112:76
+  110 |                         </div>
+  111 |                         <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
+  112 |                             {prototype_ai_ready ? "AI vision ready next" : "Prototype only"}
+      |                                                                            ^^^^^^^^^^^^^^^^
+  113 |                         </div>
+  114 |                     </div>
+✖ Error: error[E0001]: Expected '</', got '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:112:92
+  110 |                         </div>
+  111 |                         <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
+  112 |                             {prototype_ai_ready ? "AI vision ready next" : "Prototype only"}
+      |                                                                                            ^
+  113 |                         </div>
+  114 |                     </div>
+✖ Error: error[E0001]: Expected 'JSX_NAME', got 'JSX_TEXT'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:112:93
+  110 |                         </div>
+  111 |                         <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
+  112 |                             {prototype_ai_ready ? "AI vision ready next" : "Prototype only"}
+      |                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  113 |                         </div>
+  114 |                     </div>
+✖ Error: error[E0001]: Expected 'JSX_TAG_END', got '</'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:113:25
+  111 |                         <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
+  112 |                             {prototype_ai_ready ? "AI vision ready next" : "Prototype only"}
+  113 |                         </div>
+      |                         ^^
+  114 |                     </div>
+  115 | 
+✖ Error: error[E0001]: Expected '</', got 'JSX_NAME'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:113:27
+  111 |                         <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
+  112 |                             {prototype_ai_ready ? "AI vision ready next" : "Prototype only"}
+  113 |                         </div>
+      |                           ^^^
+  114 |                     </div>
+  115 | 
+✖ Error: error[E0001]: Expected 'JSX_NAME', got 'JSX_TAG_END'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:113:30
+  111 |                         <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
+  112 |                             {prototype_ai_ready ? "AI vision ready next" : "Prototype only"}
+  113 |                         </div>
+      |                              ^
+  114 |                     </div>
+  115 | 
+✖ Error: error[E0001]: Expected 'JSX_TAG_END', got 'JSX_TEXT'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:113:31
+  111 |                         <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
+  112 |                             {prototype_ai_ready ? "AI vision ready next" : "Prototype only"}
+  113 |                         </div>
+      |                               ^^^^^^^^^^^^^^^^^^^^^
+  114 |                     </div>
+  115 | 
+✖ Error: error[E0002]: Missing ')'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:130:27
+  128 |                         </div>
+  129 |                     </div>
+  130 |                 </section>
+      |                           ^^^^^^^^^^^^^^^^^^
+  131 | 
+  132 |                 <section className="overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-card">
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:130:27
+  128 |                         </div>
+  129 |                     </div>
+  130 |                 </section>
+      |                           ^^^^^^^^^^^^^^^^^^
+  131 | 
+  132 |                 <section className="overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-card">
+✖ Error: error[E0004]: Unexpected token in expression: 'JSX_TEXT'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:130:27
+  128 |                         </div>
+  129 |                     </div>
+  130 |                 </section>
+      |                           ^^^^^^^^^^^^^^^^^^
+  131 | 
+  132 |                 <section className="overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-card">
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:132:17
+  130 |                 </section>
+  131 | 
+  132 |                 <section className="overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-card">
+      |                 ^
+  133 |                     <div className="relative aspect-[3/4] w-full bg-gradient-to-b from-sky-500/20 via-slate-950 to-slate-950">
+  134 |                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(103,232,249,0.18),transparent_35%)]" />
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:156:27
+  154 |                         </div>
+  155 |                     </div>
+  156 |                 </section>
+      |                           ^^^^^^^^^^^^^^^^^^
+  157 | 
+  158 |                 {alert_banner and (
+✖ Error: error[E0004]: Unexpected token in expression: 'JSX_TEXT'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:156:27
+  154 |                         </div>
+  155 |                     </div>
+  156 |                 </section>
+      |                           ^^^^^^^^^^^^^^^^^^
+  157 | 
+  158 |                 {alert_banner and (
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:158:17
+  156 |                 </section>
+  157 | 
+  158 |                 {alert_banner and (
+      |                 ^
+  159 |                     <section className="rounded-3xl border border-rose-400/30 bg-rose-400/10 px-4 py-4 text-sm text-rose-100 shadow-soft">
+  160 |                         <p className="font-semibold">Alert</p>
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:163:19
+  161 |                         <p className="mt-1 leading-6">{alert_banner}</p>
+  162 |                     </section>
+  163 |                 )}
+      |                   ^^^^^^^^^^^^^^^^^^
+  164 | 
+  165 |                 <section className="rounded-[1.75rem] border border-border bg-card p-4 shadow-card">
+✖ Error: error[E0004]: Unexpected token in expression: 'JSX_TEXT'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:163:19
+  161 |                         <p className="mt-1 leading-6">{alert_banner}</p>
+  162 |                     </section>
+  163 |                 )}
+      |                   ^^^^^^^^^^^^^^^^^^
+  164 | 
+  165 |                 <section className="rounded-[1.75rem] border border-border bg-card p-4 shadow-card">
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:165:17
+  163 |                 )}
+  164 | 
+  165 |                 <section className="rounded-[1.75rem] border border-border bg-card p-4 shadow-card">
+      |                 ^
+  166 |                     <div className="grid grid-cols-2 gap-3">
+  167 |                         <button
+✖ Error: error[E0002]: Missing '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:202:62
+  200 |                                 <span className="block text-xs text-muted-foreground">Use speech output when a hazard is detected.</span>
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+✖ Error: error[E0001]: Expected 'JSX_TAG_END', got 'STRING'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:202:62
+  200 |                                 <span className="block text-xs text-muted-foreground">Use speech output when a hazard is detected.</span>
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+✖ Error: error[E0001]: Expected '</', got ':'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:202:144
+  200 |                                 <span className="block text-xs text-muted-foreground">Use speech output when a hazard is detected.</span>
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                                                                                                ^
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+✖ Error: error[E0001]: Expected 'JSX_NAME', got 'STRING'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:202:146
+  200 |                                 <span className="block text-xs text-muted-foreground">Use speech output when a hazard is detected.</span>
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+✖ Error: error[E0001]: Expected 'JSX_TAG_END', got '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:202:223
+  200 |                                 <span className="block text-xs text-muted-foreground">Use speech output when a hazard is detected.</span>
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                                                                                                                                                                               ^
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+✖ Error: error[E0001]: Expected '</', got 'JSX_TAG_END'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:202:224
+  200 |                                 <span className="block text-xs text-muted-foreground">Use speech output when a hazard is detected.</span>
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                                                                                                                                                                                ^
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+✖ Error: error[E0001]: Expected 'JSX_NAME', got 'JSX_TEXT'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:202:225
+  200 |                                 <span className="block text-xs text-muted-foreground">Use speech output when a hazard is detected.</span>
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+✖ Error: error[E0001]: Expected 'JSX_TAG_END', got '{'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:203:33
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+      |                                 ^
+  204 |                             </span>
+  205 |                         </button>
+✖ Error: error[E0001]: Expected '</', got 'NAME'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:203:34
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+      |                                  ^^^^^^^^^^^^^
+  204 |                             </span>
+  205 |                         </button>
+✖ Error: error[E0001]: Expected 'JSX_NAME', got '?'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:203:48
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+      |                                                ^
+  204 |                             </span>
+  205 |                         </button>
+✖ Error: error[E0001]: Expected 'JSX_TAG_END', got 'STRING'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:203:50
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+      |                                                  ^^^^
+  204 |                             </span>
+  205 |                         </button>
+✖ Error: error[E0001]: Expected '</', got ':'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:203:55
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+      |                                                       ^
+  204 |                             </span>
+  205 |                         </button>
+✖ Error: error[E0001]: Expected 'JSX_NAME', got 'STRING'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:203:57
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+      |                                                         ^^^^^
+  204 |                             </span>
+  205 |                         </button>
+✖ Error: error[E0001]: Expected 'JSX_TAG_END', got '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:203:62
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+      |                                                              ^
+  204 |                             </span>
+  205 |                         </button>
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:203:63
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+      |                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  204 |                             </span>
+  205 |                         </button>
+✖ Error: error[E0004]: Unexpected token in expression: 'JSX_TEXT'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:203:63
+  201 |                             </span>
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+      |                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  204 |                             </span>
+  205 |                         </button>
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:204:29
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+      |                             ^^
+  205 |                         </button>
+  206 | 
+✖ Error: error[E0004]: Unexpected token in expression: '</'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:204:29
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+      |                             ^^
+  205 |                         </button>
+  206 | 
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:204:31
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+      |                               ^^^^
+  205 |                         </button>
+  206 | 
+✖ Error: error[E0004]: Unexpected token in expression: 'JSX_NAME'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:204:31
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+      |                               ^^^^
+  205 |                         </button>
+  206 | 
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:204:35
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+      |                                   ^
+  205 |                         </button>
+  206 | 
+✖ Error: error[E0004]: Unexpected token in expression: 'JSX_TAG_END'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:204:35
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+      |                                   ^
+  205 |                         </button>
+  206 | 
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:204:36
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+      |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  205 |                         </button>
+  206 | 
+✖ Error: error[E0004]: Unexpected token in expression: 'JSX_TEXT'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:204:36
+  202 |                             <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+      |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  205 |                         </button>
+  206 | 
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:205:25
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+  205 |                         </button>
+      |                         ^^
+  206 | 
+  207 |                         <button
+✖ Error: error[E0004]: Unexpected token in expression: '</'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:205:25
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+  205 |                         </button>
+      |                         ^^
+  206 | 
+  207 |                         <button
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:205:27
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+  205 |                         </button>
+      |                           ^^^^^^
+  206 | 
+  207 |                         <button
+✖ Error: error[E0004]: Unexpected token in expression: 'JSX_NAME'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:205:27
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+  205 |                         </button>
+      |                           ^^^^^^
+  206 | 
+  207 |                         <button
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:205:33
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+  205 |                         </button>
+      |                                 ^
+  206 | 
+  207 |                         <button
+✖ Error: error[E0004]: Unexpected token in expression: 'JSX_TAG_END'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:205:33
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+  205 |                         </button>
+      |                                 ^
+  206 | 
+  207 |                         <button
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:205:34
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+  205 |                         </button>
+      |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  206 | 
+  207 |                         <button
+✖ Error: error[E0004]: Unexpected token in expression: 'JSX_TEXT'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:205:34
+  203 |                                 {spoken_alerts ? "On" : "Off"}
+  204 |                             </span>
+  205 |                         </button>
+      |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  206 | 
+  207 |                         <button
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:207:25
+  205 |                         </button>
+  206 | 
+  207 |                         <button
+      |                         ^
+  208 |                             className="flex items-center justify-between rounded-2xl border border-border bg-background/70 px-4 py-3 text-left transition hover:bg-card-hover focus:outline-none focus:ring-2 focus:ring-primary"
+  209 |                             onClick={handle_toggle_vibration}
+✖ Error: error[E0002]: Missing '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:215:65
+  213 |                                 <span className="block text-xs text-muted-foreground">Useful for pocket or noisy-environment testing.</span>
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+  217 |                             </span>
+✖ Error: error[E0001]: Expected 'JSX_TAG_END', got 'STRING'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:215:65
+  213 |                                 <span className="block text-xs text-muted-foreground">Useful for pocket or noisy-environment testing.</span>
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+  217 |                             </span>
+✖ Error: error[E0001]: Expected '</', got ':'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:215:147
+  213 |                                 <span className="block text-xs text-muted-foreground">Useful for pocket or noisy-environment testing.</span>
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                                                                                                   ^
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+  217 |                             </span>
+✖ Error: error[E0001]: Expected 'JSX_NAME', got 'STRING'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:215:149
+  213 |                                 <span className="block text-xs text-muted-foreground">Useful for pocket or noisy-environment testing.</span>
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+  217 |                             </span>
+✖ Error: error[E0001]: Expected 'JSX_TAG_END', got '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:215:226
+  213 |                                 <span className="block text-xs text-muted-foreground">Useful for pocket or noisy-environment testing.</span>
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                                                                                                                                                                                  ^
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+  217 |                             </span>
+✖ Error: error[E0001]: Expected '</', got 'JSX_TAG_END'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:215:227
+  213 |                                 <span className="block text-xs text-muted-foreground">Useful for pocket or noisy-environment testing.</span>
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                                                                                                                                                                                   ^
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+  217 |                             </span>
+✖ Error: error[E0001]: Expected 'JSX_NAME', got 'JSX_TEXT'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:215:228
+  213 |                                 <span className="block text-xs text-muted-foreground">Useful for pocket or noisy-environment testing.</span>
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+      |                                                                                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+  217 |                             </span>
+✖ Error: error[E0001]: Expected 'JSX_TAG_END', got '{'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:216:33
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+      |                                 ^
+  217 |                             </span>
+  218 |                         </button>
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:216:34
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+      |                                  ^^^^^^^^^^^^^^^^
+  217 |                             </span>
+  218 |                         </button>
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:216:53
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+      |                                                     ^^^^
+  217 |                             </span>
+  218 |                         </button>
+✖ Error: error[E0002]: Missing ';'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:216:65
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+      |                                                                 ^
+  217 |                             </span>
+  218 |                         </button>
+✖ Error: error[E0005]: Unexpected token '
+                            '
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:216:66
+  214 |                             </span>
+  215 |                             <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
+  216 |                                 {vibration_alerts ? "On" : "Off"}
+      |                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  217 |                             </span>
+  218 |                         </button>
+✖ Error: error[E0005]: Unexpected token '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:225:113
+  223 |                     <div className="rounded-3xl border border-border bg-card p-4 shadow-soft">
+  224 |                         <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Brightness</p>
+  225 |                         <p className="mt-3 text-2xl font-bold text-foreground">{format_percent(brightness_score)}</p>
+      |                                                                                                                 ^
+  226 |                     </div>
+  227 |                     <div className="rounded-3xl border border-border bg-card p-4 shadow-soft">
+✖ Error: error[E0005]: Unexpected token '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:229:109
+  227 |                     <div className="rounded-3xl border border-border bg-card p-4 shadow-soft">
+  228 |                         <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Motion</p>
+  229 |                         <p className="mt-3 text-2xl font-bold text-foreground">{format_percent(motion_score)}</p>
+      |                                                                                                             ^
+  230 |                     </div>
+  231 |                     <div className="rounded-3xl border border-border bg-card p-4 shadow-soft">
+✖ Error: error[E0005]: Unexpected token '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:233:109
+  231 |                     <div className="rounded-3xl border border-border bg-card p-4 shadow-soft">
+  232 |                         <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Change</p>
+  233 |                         <p className="mt-3 text-2xl font-bold text-foreground">{format_percent(change_score)}</p>
+      |                                                                                                             ^
+  234 |                     </div>
+  235 |                 </section>
+✖ Error: error[E0005]: Unexpected token '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:251:103
+  249 |                         <div className="rounded-2xl border border-border bg-background/70 p-4">
+  250 |                             <p className="text-sm font-semibold text-foreground">Detection summary</p>
+  251 |                             <p className="mt-1 text-sm leading-6 text-muted-foreground">{hazard_reason}</p>
+      |                                                                                                       ^
+  252 |                         </div>
+  253 |                         <div className="rounded-2xl border border-border bg-background/70 p-4">
+✖ Error: error[E0005]: Unexpected token '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:255:105
+  253 |                         <div className="rounded-2xl border border-border bg-background/70 p-4">
+  254 |                             <p className="text-sm font-semibold text-foreground">Permission hint</p>
+  255 |                             <p className="mt-1 text-sm leading-6 text-muted-foreground">{permission_hint}</p>
+      |                                                                                                         ^
+  256 |                         </div>
+  257 |                         <div className="rounded-2xl border border-border bg-background/70 p-4">
+✖ Error: error[E0005]: Unexpected token '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:259:103
+  257 |                         <div className="rounded-2xl border border-border bg-background/70 p-4">
+  258 |                             <p className="text-sm font-semibold text-foreground">Last alert</p>
+  259 |                             <p className="mt-1 text-sm leading-6 text-muted-foreground">{last_alert_at}</p>
+      |                                                                                                       ^
+  260 |                         </div>
+  261 |                     </div>
+✖ Error: error[E0030]: Unexpected semicolon at module level
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:272:6
+  270 |             </div>
+  271 |         </main>
+  272 |     );
+      |      ^
+  273 | }
+  274 | 
+✖ Error: error[E0005]: Unexpected token '}'
+  --> /root/.jac-ide/projects/578ba9c0-dc99-4beb-99a2-2e3b2869c782/prj_1775327373230/components/openAEyeApp.cl.jac:273:1
+  271 |         </main>
+  272 |     );
+  273 | }
+      | ^
+  274 | 
