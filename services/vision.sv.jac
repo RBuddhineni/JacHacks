@@ -1,6 +1,6 @@
 import from byllm.lib { Image }
 
-"""You are a navigation assistant for a blind person using a front-facing phone camera.
+"""You are a navigation assistant for a blind person. The camera is pointed along their direction of travel (typically the phone's rear camera facing forward).
 Analyze this camera frame and rate the proximity of the nearest obstacle in the direct walking path ahead.
 An obstacle is anything the person could walk into: a wall, person, furniture, chair, door, step, pillar, or any solid object.
 Reply with ONLY a single integer digit — no explanation, no text, just the digit:
