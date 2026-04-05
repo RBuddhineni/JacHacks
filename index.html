@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>OpenAEye — AI Navigation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: '#020817',
+            foreground: '#f1f5f9',
+            card: '#0d1f35',
+            border: 'rgba(148,163,184,0.12)',
+            primary: '#38bdf8',
+            muted: '#64748b',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+    body { background: #020817; color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; overscroll-behavior: none; }
+    video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    canvas { display: none; }
+    .pulse-ring { animation: pulse-ring 1.5s ease-out infinite; }
+    @keyframes pulse-ring {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.6); }
+    }
+    .danger-flash { animation: danger-flash 0.4s ease-in-out; }
+    @keyframes danger-flash {
+      0%, 100% { background-color: rgba(251,113,133,0.1); }
+      50% { background-color: rgba(251,113,133,0.35); }
+    }
+    #alert-banner { display: none; }
+    #alert-banner.show { display: block; }
+    .scan-dot { animation: scan-dot 1s ease-in-out infinite alternate; }
+    @keyframes scan-dot {
+      from { opacity: 0.4; } to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+<div class="mx-auto flex min-h-screen w-full max-w-md flex-col gap-4 px-4 py-5">
+
+  <!-- Header card -->
+  <section class="rounded-[1.75rem] border border-white/10 bg-[#0d1f35] p-5 shadow-lg">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <div class="inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-sky-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-sky-400">
+          OpenAEye
+        </div>
+        <h1 class="mt-3 text-3xl font-extrabold tracking-tight">AI Navigation</h1>
+        <p class="mt-2 text-sm leading-6 text-slate-400">
+          Front camera · AI obstacle detection · Voice alerts
+        </p>
+      </div>
+      <div id="ai-badge" class="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
+        Ready
+      </div>
+    </div>
+
+    <div class="mt-4 grid grid-cols-3 gap-3 text-center">
+      <div class="rounded-2xl border border-white/8 bg-black/30 px-3 py-3">
+        <p class="text-[10px] uppercase tracking-widest text-slate-500">Status</p>
+        <p id="stat-status" class="mt-2 text-sm font-semibold">Idle</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-black/30 px-3 py-3">
+        <p class="text-[10px] uppercase tracking-widest text-slate-500">Result</p>
+        <p id="stat-result" class="mt-2 text-sm font-semibold">—</p>
+      </div>
+      <div class="rounded-2xl border border-white/8 bg-black/30 px-3 py-3">
+        <p class="text-[10px] uppercase tracking-widest text-slate-500">Scans</p>
+        <p id="stat-scans" class="mt-2 text-sm font-semibold">0</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Camera feed -->
+  <section class="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-950 shadow-lg" style="aspect-ratio: 3/4;">
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="canvas"></canvas>
+
+    <!-- Idle overlay (shown when not monitoring) -->
+    <div id="camera-idle" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/90 px-6 text-center">
+      <div class="mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-white/15 bg-white/8 text-4xl">
+        👁️
+      </div>
+      <p class="text-base font-semibold">Camera not started</p>
+      <p class="mt-2 max-w-xs text-sm leading-6 text-slate-400">
+        Tap <strong>Start monitoring</strong> below to begin. Allow camera access when prompted.
+      </p>
+    </div>
+
+    <!-- Active scanning indicator -->
+    <div id="scan-indicator" class="absolute left-4 top-4 hidden items-center gap-2 rounded-full border border-white/15 bg-slate-950/70 px-3 py-1.5 backdrop-blur">
+      <span class="scan-dot h-2 w-2 rounded-full bg-emerald-400"></span>
+      <span class="text-xs font-medium text-emerald-300">Scanning</span>
+    </div>
+
+    <!-- API call spinner -->
+    <div id="api-spinner" class="absolute right-4 top-4 hidden h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-slate-950/70 backdrop-blur">
+      <svg class="h-4 w-4 animate-spin text-sky-400" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+    </div>
+
+    <!-- Status bar at bottom of camera -->
+    <div class="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-slate-950/70 p-3 backdrop-blur">
+      <p id="camera-status-text" class="text-xs leading-5 text-slate-300">
+        Tap Start to request camera access.
+      </p>
+    </div>
+  </section>
+
+  <!-- Alert banner -->
+  <section id="alert-banner" class="danger-flash rounded-3xl border border-rose-400/30 bg-rose-400/10 px-5 py-4">
+    <div class="flex items-center gap-3">
+      <div class="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-rose-400/30 bg-rose-400/15">
+        <span class="text-xl">🛑</span>
+        <span class="pulse-ring absolute inset-0 rounded-full border-2 border-rose-400/50"></span>
+      </div>
+      <div>
+        <p class="font-bold text-rose-200">Obstacle Detected</p>
+        <p class="text-sm text-rose-300">Stop, obstacle ahead</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Controls -->
+  <section class="rounded-[1.75rem] border border-white/10 bg-[#0d1f35] p-4 shadow-lg">
+    <div class="grid grid-cols-2 gap-3">
+      <button
+        id="btn-start"
+        class="inline-flex min-h-14 items-center justify-center rounded-2xl bg-sky-500 px-4 py-3 text-sm font-bold text-white transition active:scale-95 active:opacity-80"
+      >
+        Start monitoring
+      </button>
+      <button
+        id="btn-stop"
+        class="inline-flex min-h-14 items-center justify-center rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-sm font-semibold text-slate-300 transition active:scale-95 active:opacity-80"
+      >
+        Stop
+      </button>
+    </div>
+
+    <div class="mt-3 rounded-2xl border border-white/8 bg-black/20 px-4 py-3 text-xs text-slate-400 leading-5">
+      <span class="font-semibold text-slate-300">How it works: </span>
+      Camera captures frames every 100ms. If the scene changes, the AI checks for obstacles. Voice alert fires immediately on detection.
+    </div>
+  </section>
+
+  <!-- Last alert info -->
+  <section class="rounded-[1.75rem] border border-white/10 bg-[#0d1f35] p-5 shadow-lg">
+    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Detection log</p>
+    <div class="mt-3 space-y-2">
+      <div class="flex justify-between rounded-xl border border-white/8 bg-black/20 px-4 py-2.5 text-sm">
+        <span class="text-slate-400">Total scans</span>
+        <span id="log-scans" class="font-semibold">0</span>
+      </div>
+      <div class="flex justify-between rounded-xl border border-white/8 bg-black/20 px-4 py-2.5 text-sm">
+        <span class="text-slate-400">Obstacles found</span>
+        <span id="log-alerts" class="font-semibold text-rose-300">0</span>
+      </div>
+      <div class="flex justify-between rounded-xl border border-white/8 bg-black/20 px-4 py-2.5 text-sm">
+        <span class="text-slate-400">Last result</span>
+        <span id="log-last" class="font-semibold">None yet</span>
+      </div>
+      <div class="flex justify-between rounded-xl border border-white/8 bg-black/20 px-4 py-2.5 text-sm">
+        <span class="text-slate-400">Last alert</span>
+        <span id="log-last-alert" class="font-semibold text-slate-400">No alerts yet</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclaimer -->
+  <section class="rounded-[1.75rem] border border-white/10 bg-[#0d1f35] p-5 shadow-lg">
+    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Disclaimer</p>
+    <p class="mt-3 text-xs leading-6 text-slate-500">
+      OpenAEye is a prototype. Not a certified safety device. Always verify surroundings manually. AI responses may be incorrect.
+    </p>
+  </section>
+
+  <div class="pb-8"></div>
+</div>
+
+<script>
+  // ─── Config ───────────────────────────────────────────────────
+  const OPENROUTER_API_KEY = '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';
+  const MODEL = 'google/gemini-2.5-flash-preview';  // fast vision model
+  const CAPTURE_INTERVAL_MS = 100;             // capture every 100ms
+  const MIN_API_INTERVAL_MS = 500;             // max 2 AI calls/sec
+  const DIFF_THRESHOLD = 12;                   // avg per-channel pixel change (0-255)
+  const FRAME_WIDTH = 320;                     // resize for faster API
+  const FRAME_HEIGHT = 240;
+
+  // ─── Proximity tracking ───────────────────────────────────────
+  // 0=CLEAR, 1=FAR, 2=APPROACHING, 3=NEAR, 4=CRITICAL
+  const PROX_HISTORY_SIZE = 5;
+  const ALERT_MIN_SCORE = 3;       // must be NEAR or CRITICAL to alert
+  const APPROACH_MIN_SCORE = 2;    // must have been at least APPROACHING recently
+  let proximityHistory = [];       // rolling window of last N scores
+
+  function recordProximity(score) {
+    proximityHistory.push(score);
+    if (proximityHistory.length > PROX_HISTORY_SIZE) {
+      proximityHistory.shift();
+    }
+  }
+
+  // Alert only when: current score >= NEAR AND recent frames show approach trend
+  function shouldAlert(currentScore) {
+    if (currentScore < ALERT_MIN_SCORE) return false;
+    // Need at least 2 frames of history
+    if (proximityHistory.length < 2) return false;
+    // At least one of the previous frames must have been APPROACHING or higher
+    const prevFrames = proximityHistory.slice(0, -1); // exclude current
+    return prevFrames.some(s => s >= APPROACH_MIN_SCORE);
+  }
+
+  // ─── State ────────────────────────────────────────────────────
+  let monitoring = false;
+  let cameraStream = null;
+  let captureTimer = null;
+  let lastApiCallTime = 0;
+  let lastPixelData = null;
+  let scanCount = 0;
+  let alertCount = 0;
+  let isCallingApi = false;
+  let alertVisible = false;
+  let alertHideTimer = null;
+
+  // ─── DOM refs ─────────────────────────────────────────────────
+  const video       = document.getElementById('video');
+  const canvas      = document.getElementById('canvas');
+  const btnStart    = document.getElementById('btn-start');
+  const btnStop     = document.getElementById('btn-stop');
+  const alertBanner = document.getElementById('alert-banner');
+  const cameraIdle  = document.getElementById('camera-idle');
+  const scanIndicator = document.getElementById('scan-indicator');
+  const apiSpinner  = document.getElementById('api-spinner');
+  const statStatus  = document.getElementById('stat-status');
+  const statResult  = document.getElementById('stat-result');
+  const statScans   = document.getElementById('stat-scans');
+  const cameraStatusText = document.getElementById('camera-status-text');
+  const logScans    = document.getElementById('log-scans');
+  const logAlerts   = document.getElementById('log-alerts');
+  const logLast     = document.getElementById('log-last');
+  const logLastAlert = document.getElementById('log-last-alert');
+  const aiBadge     = document.getElementById('ai-badge');
+
+  canvas.width = FRAME_WIDTH;
+  canvas.height = FRAME_HEIGHT;
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+  // ─── Start camera ─────────────────────────────────────────────
+  btnStart.addEventListener('click', async () => {
+    if (monitoring) return;
+
+    // Pre-warm speech synthesis on iOS (must be from user gesture)
+    try {
+      const warm = new SpeechSynthesisUtterance('');
+      window.speechSynthesis.speak(warm);
+    } catch (_) {}
+
+    statStatus.textContent = 'Requesting…';
+    cameraStatusText.textContent = 'Requesting camera access…';
+    btnStart.disabled = true;
+    btnStart.classList.add('opacity-50');
+
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: 'user',
+          width: { ideal: 1280 },
+          height: { ideal: 960 }
+        },
+        audio: false
+      });
+      video.srcObject = cameraStream;
+      await video.play();
+
+      monitoring = true;
+      lastPixelData = null;
+      proximityHistory = [];
+      scanCount = 0;
+      alertCount = 0;
+
+      cameraIdle.style.display = 'none';
+      scanIndicator.style.display = 'flex';
+      statStatus.textContent = 'Monitoring';
+      cameraStatusText.textContent = 'Camera active — AI scanning for obstacles.';
+      aiBadge.textContent = 'Live';
+      aiBadge.className = 'rounded-2xl border border-rose-400/25 bg-rose-400/10 px-3 py-2 text-right text-xs font-medium text-rose-300';
+
+      captureTimer = setInterval(runCaptureLoop, CAPTURE_INTERVAL_MS);
+    } catch (err) {
+      console.error('Camera error:', err);
+      statStatus.textContent = 'Error';
+      cameraStatusText.textContent = 'Camera access denied or unavailable. Check browser permissions.';
+      btnStart.disabled = false;
+      btnStart.classList.remove('opacity-50');
+    }
+  });
+
+  // ─── Stop camera ──────────────────────────────────────────────
+  btnStop.addEventListener('click', stopMonitoring);
+
+  function stopMonitoring() {
+    monitoring = false;
+    clearInterval(captureTimer);
+    captureTimer = null;
+    proximityHistory = [];
+
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(t => t.stop());
+      cameraStream = null;
+    }
+    video.srcObject = null;
+
+    cameraIdle.style.display = 'flex';
+    scanIndicator.style.display = 'none';
+    apiSpinner.style.display = 'none';
+    hideAlert();
+
+    statStatus.textContent = 'Stopped';
+    statResult.textContent = '—';
+    cameraStatusText.textContent = 'Monitoring stopped. Tap Start to resume.';
+    aiBadge.textContent = 'Ready';
+    aiBadge.className = 'rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300';
+
+    btnStart.disabled = false;
+    btnStart.classList.remove('opacity-50');
+  }
+
+  // ─── Capture loop ─────────────────────────────────────────────
+  function runCaptureLoop() {
+    if (!monitoring || video.readyState < 2) return;
+
+    ctx.drawImage(video, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+    const frameData = ctx.getImageData(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+
+    const changed = hasSignificantChange(frameData);
+    lastPixelData = frameData;
+
+    const now = Date.now();
+    const rateLimitOk = (now - lastApiCallTime) >= MIN_API_INTERVAL_MS;
+
+    if (changed && rateLimitOk && !isCallingApi) {
+      const base64 = canvas.toDataURL('image/jpeg', 0.65).split(',')[1];
+      lastApiCallTime = now;
+      callOpenRouter(base64);
+    }
+  }
+
+  // ─── Pixel diff ───────────────────────────────────────────────
+  function hasSignificantChange(frameData) {
+    if (!lastPixelData) return true;
+    const d1 = frameData.data;
+    const d2 = lastPixelData.data;
+    let total = 0;
+    const step = 40; // sample every 10th pixel
+    const samples = Math.floor(d1.length / step);
+    for (let i = 0; i < d1.length; i += step) {
+      total += Math.abs(d1[i] - d2[i])
+             + Math.abs(d1[i+1] - d2[i+1])
+             + Math.abs(d1[i+2] - d2[i+2]);
+    }
+    return (total / (samples * 3)) > DIFF_THRESHOLD;
+  }
+
+  // ─── OpenRouter API call ──────────────────────────────────────
+  // Proximity scale: 0=clear, 1=far, 2=approaching, 3=near, 4=critical
+  const PROX_LABELS = ['Clear', 'Far', 'Approaching', 'Near', 'Critical'];
+  const PROX_COLORS = [
+    'text-emerald-300',   // 0 clear
+    'text-sky-300',       // 1 far
+    'text-amber-300',     // 2 approaching
+    'text-orange-400',    // 3 near
+    'text-rose-300',      // 4 critical
+  ];
+
+  async function callOpenRouter(base64Image) {
+    isCallingApi = true;
+    apiSpinner.style.display = 'flex';
+
+    try {
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': window.location.origin,
+          'X-Title': 'OpenAEye'
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          max_tokens: 3,
+          messages: [{
+            role: 'user',
+            content: [
+              {
+                type: 'text',
+                text: 'You are a navigation assistant for a blind person using a front-facing camera. Look at this image and rate the proximity of the nearest obstacle directly in the walking path ahead (wall, person, furniture, door, step, or any object they would walk into). Use this scale:\n0 = no obstacle or very far away (>4m, safe to walk)\n1 = far (2-4m, worth tracking)\n2 = approaching (1-2m, starting to close in)\n3 = near (<1m, getting close, danger zone)\n4 = critical (about to collide, stop immediately)\nReply with ONLY the single digit 0, 1, 2, 3, or 4.'
+              },
+              {
+                type: 'image_url',
+                image_url: {
+                  url: `data:image/jpeg;base64,${base64Image}`
+                }
+              }
+            ]
+          }]
+        })
+      });
+
+      const data = await res.json();
+      const raw = (data.choices?.[0]?.message?.content || '').trim();
+      const score = parseInt(raw, 10);
+      const validScore = isNaN(score) ? 0 : Math.max(0, Math.min(4, score));
+
+      recordProximity(validScore);
+      scanCount++;
+
+      const label = PROX_LABELS[validScore] || 'Unknown';
+      updateStats(label, validScore);
+
+      if (shouldAlert(validScore)) {
+        alertCount++;
+        triggerAlert(validScore);
+      } else if (validScore < ALERT_MIN_SCORE) {
+        hideAlert();
+      }
+    } catch (err) {
+      console.error('OpenRouter error:', err);
+      statResult.textContent = 'API err';
+    } finally {
+      isCallingApi = false;
+      apiSpinner.style.display = 'none';
+    }
+  }
+
+  // ─── UI updates ───────────────────────────────────────────────
+  function updateStats(label, score) {
+    statScans.textContent = scanCount;
+    statResult.textContent = label || '?';
+    statResult.className = `mt-2 text-sm font-semibold ${PROX_COLORS[score] || 'text-slate-300'}`;
+    logScans.textContent = scanCount;
+    logAlerts.textContent = alertCount;
+    logLast.textContent = `${score} — ${label}`;
+  }
+
+  function triggerAlert(score) {
+    const isCritical = score >= 4;
+
+    // Show banner
+    alertBanner.classList.add('show');
+    alertVisible = true;
+
+    // Reset auto-hide (shorter for critical)
+    clearTimeout(alertHideTimer);
+    alertHideTimer = setTimeout(hideAlert, isCritical ? 2000 : 3000);
+
+    // Voice alert — only speak if not already speaking
+    if (!window.speechSynthesis.speaking) {
+      const msg = score >= 4 ? 'Stop now, obstacle ahead' : 'Stop, obstacle ahead';
+      speakAlert(msg);
+    }
+
+    // Update log
+    logLastAlert.textContent = new Date().toLocaleTimeString();
+    logLastAlert.className = 'font-semibold text-rose-300';
+  }
+
+  function hideAlert() {
+    alertBanner.classList.remove('show');
+    alertVisible = false;
+  }
+
+  function speakAlert(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1.1;
+    utterance.pitch = 1.0;
+    utterance.volume = 1.0;
+    // Pick a clear English voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const preferred = voices.find(v => v.lang.startsWith('en') && v.localService);
+    if (preferred) utterance.voice = preferred;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // Load voices early (Chrome needs this)
+  if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+  }
+</script>
+
+</body>
+</html>
