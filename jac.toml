@@ -22,7 +22,7 @@ plugins = ["tailwindcss()"]
 lib_imports = ["import tailwindcss from '@tailwindcss/vite'"]
 
 [plugins.byllm.model]
-default_model = "claude-sonnet-4-6"
+default_model = "openrouter/google/gemini-2.5-flash-preview"
 
 [serve]
 base_route_app = "app"
