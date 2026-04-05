@@ -195,12 +195,36 @@
 <script>
   // ─── Config ───────────────────────────────────────────────────
   const OPENROUTER_API_KEY = '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';
-  const MODEL = 'openai/gpt-4o-mini';          // fast vision model
+  const MODEL = 'google/gemini-2.5-flash-preview';  // fast vision model
   const CAPTURE_INTERVAL_MS = 100;             // capture every 100ms
   const MIN_API_INTERVAL_MS = 500;             // max 2 AI calls/sec
   const DIFF_THRESHOLD = 12;                   // avg per-channel pixel change (0-255)
   const FRAME_WIDTH = 320;                     // resize for faster API
   const FRAME_HEIGHT = 240;
+
+  // ─── Proximity tracking ───────────────────────────────────────
+  // 0=CLEAR, 1=FAR, 2=APPROACHING, 3=NEAR, 4=CRITICAL
+  const PROX_HISTORY_SIZE = 5;
+  const ALERT_MIN_SCORE = 3;       // must be NEAR or CRITICAL to alert
+  const APPROACH_MIN_SCORE = 2;    // must have been at least APPROACHING recently
+  let proximityHistory = [];       // rolling window of last N scores
+
+  function recordProximity(score) {
+    proximityHistory.push(score);
+    if (proximityHistory.length > PROX_HISTORY_SIZE) {
+      proximityHistory.shift();
+    }
+  }
+
+  // Alert only when: current score >= NEAR AND recent frames show approach trend
+  function shouldAlert(currentScore) {
+    if (currentScore < ALERT_MIN_SCORE) return false;
+    // Need at least 2 frames of history
+    if (proximityHistory.length < 2) return false;
+    // At least one of the previous frames must have been APPROACHING or higher
+    const prevFrames = proximityHistory.slice(0, -1); // exclude current
+    return prevFrames.some(s => s >= APPROACH_MIN_SCORE);
+  }
 
   // ─── State ────────────────────────────────────────────────────
   let monitoring = false;
@@ -266,6 +290,7 @@
 
       monitoring = true;
       lastPixelData = null;
+      proximityHistory = [];
       scanCount = 0;
       alertCount = 0;
 
@@ -293,6 +318,7 @@
     monitoring = false;
     clearInterval(captureTimer);
     captureTimer = null;
+    proximityHistory = [];
 
     if (cameraStream) {
       cameraStream.getTracks().forEach(t => t.stop());
@@ -352,6 +378,16 @@
   }
 
   // ─── OpenRouter API call ──────────────────────────────────────
+  // Proximity scale: 0=clear, 1=far, 2=approaching, 3=near, 4=critical
+  const PROX_LABELS = ['Clear', 'Far', 'Approaching', 'Near', 'Critical'];
+  const PROX_COLORS = [
+    'text-emerald-300',   // 0 clear
+    'text-sky-300',       // 1 far
+    'text-amber-300',     // 2 approaching
+    'text-orange-400',    // 3 near
+    'text-rose-300',      // 4 critical
+  ];
+
   async function callOpenRouter(base64Image) {
     isCallingApi = true;
     apiSpinner.style.display = 'flex';
@@ -367,13 +403,13 @@
         },
         body: JSON.stringify({
           model: MODEL,
-          max_tokens: 5,
+          max_tokens: 3,
           messages: [{
             role: 'user',
             content: [
               {
                 type: 'text',
-                text: 'You are a navigation assistant for a blind person. Look at this front-camera image. Is there an obstacle directly in the path ahead — such as a wall, person, furniture, door, step, or any object they would walk into within ~2 metres? Reply with ONLY one word: CLEAR or OBSTACLE'
+                text: 'You are a navigation assistant for a blind person using a front-facing camera. Look at this image and rate the proximity of the nearest obstacle directly in the walking path ahead (wall, person, furniture, door, step, or any object they would walk into). Use this scale:\n0 = no obstacle or very far away (>4m, safe to walk)\n1 = far (2-4m, worth tracking)\n2 = approaching (1-2m, starting to close in)\n3 = near (<1m, getting close, danger zone)\n4 = critical (about to collide, stop immediately)\nReply with ONLY the single digit 0, 1, 2, 3, or 4.'
               },
               {
                 type: 'image_url',
@@ -387,15 +423,20 @@
       });
 
       const data = await res.json();
-      const result = (data.choices?.[0]?.message?.content || '').trim().toUpperCase();
+      const raw = (data.choices?.[0]?.message?.content || '').trim();
+      const score = parseInt(raw, 10);
+      const validScore = isNaN(score) ? 0 : Math.max(0, Math.min(4, score));
 
+      recordProximity(validScore);
       scanCount++;
-      updateStats(result);
 
-      if (result.includes('OBSTACLE')) {
+      const label = PROX_LABELS[validScore] || 'Unknown';
+      updateStats(label, validScore);
+
+      if (shouldAlert(validScore)) {
         alertCount++;
-        triggerAlert();
-      } else {
+        triggerAlert(validScore);
+      } else if (validScore < ALERT_MIN_SCORE) {
         hideAlert();
       }
     } catch (err) {
@@ -408,31 +449,31 @@
   }
 
   // ─── UI updates ───────────────────────────────────────────────
-  function updateStats(result) {
+  function updateStats(label, score) {
     statScans.textContent = scanCount;
-    statResult.textContent = result || '?';
+    statResult.textContent = label || '?';
+    statResult.className = `mt-2 text-sm font-semibold ${PROX_COLORS[score] || 'text-slate-300'}`;
     logScans.textContent = scanCount;
     logAlerts.textContent = alertCount;
-    logLast.textContent = result || '?';
-
-    if (result.includes('OBSTACLE')) {
-      statResult.className = 'mt-2 text-sm font-semibold text-rose-300';
-    } else {
-      statResult.className = 'mt-2 text-sm font-semibold text-emerald-300';
-    }
+    logLast.textContent = `${score} — ${label}`;
   }
 
-  function triggerAlert() {
+  function triggerAlert(score) {
+    const isCritical = score >= 4;
+
     // Show banner
     alertBanner.classList.add('show');
     alertVisible = true;
 
-    // Reset auto-hide
+    // Reset auto-hide (shorter for critical)
     clearTimeout(alertHideTimer);
-    alertHideTimer = setTimeout(hideAlert, 3000);
+    alertHideTimer = setTimeout(hideAlert, isCritical ? 2000 : 3000);
 
-    // Voice alert
-    speakAlert('Stop, obstacle ahead');
+    // Voice alert — only speak if not already speaking
+    if (!window.speechSynthesis.speaking) {
+      const msg = score >= 4 ? 'Stop now, obstacle ahead' : 'Stop, obstacle ahead';
+      speakAlert(msg);
+    }
 
     // Update log
     logLastAlert.textContent = new Date().toLocaleTimeString();
