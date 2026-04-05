@@ -1,6 +1,4 @@
 import from byllm.lib { Image }
-import:py base64;
-import:py from io { BytesIO }
 
 """You are a navigation assistant for a blind person using a front-facing phone camera.
 Analyze this camera frame and rate the proximity of the nearest obstacle in the direct walking path ahead.
@@ -14,8 +12,7 @@ Reply with ONLY a single integer digit — no explanation, no text, just the dig
 def classify_obstacle_proximity(camera_frame: Image) -> int by llm();
 
 def:pub analyze_frame(image_base64: str) -> dict {
-    image_bytes = base64.b64decode(image_base64);
-    img = Image(url=BytesIO(image_bytes));
+    img = Image("data:image/jpeg;base64," + image_base64);
     raw_score = classify_obstacle_proximity(img);
     score = 0;
     if raw_score is not None {

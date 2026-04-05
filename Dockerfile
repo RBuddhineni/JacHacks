@@ -23,4 +23,4 @@ RUN jac install
 EXPOSE 8000
 
 # Railway sets $PORT automatically; fall back to 8000 locally
-CMD ["sh", "-c", "jac start main.jac --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "jac start main.jac --host 0.0.0.0 -p ${PORT:-8000}"]
