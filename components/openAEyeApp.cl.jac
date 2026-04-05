@@ -92,6 +92,19 @@ def:pub OpenAEyeApp() -> JsxElement {
         }
     }
 
+    ai_status_label = "AI vision ready next";
+    if not prototype_ai_ready { ai_status_label = "Prototype only"; }
+
+    spoken_cls = "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300";
+    if not spoken_alerts { spoken_cls = "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"; }
+    spoken_lbl = "On";
+    if not spoken_alerts { spoken_lbl = "Off"; }
+
+    vibration_cls = "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300";
+    if not vibration_alerts { vibration_cls = "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"; }
+    vibration_lbl = "On";
+    if not vibration_alerts { vibration_lbl = "Off"; }
+
     return (
         <main className="min-h-screen bg-background text-foreground">
             <div className="mx-auto flex min-h-screen w-full max-w-md flex-col gap-4 px-4 py-5 sm:max-w-lg">
@@ -109,7 +122,7 @@ def:pub OpenAEyeApp() -> JsxElement {
                             </p>
                         </div>
                         <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-right text-xs font-medium text-emerald-300">
-                            {prototype_ai_ready ? "AI vision ready next" : "Prototype only"}
+                            {ai_status_label}
                         </div>
                     </div>
 
@@ -199,8 +212,8 @@ def:pub OpenAEyeApp() -> JsxElement {
                                 <span className="block text-sm font-semibold text-foreground">Spoken alerts</span>
                                 <span className="block text-xs text-muted-foreground">Use speech output when a hazard is detected.</span>
                             </span>
-                            <span className={spoken_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
-                                {spoken_alerts ? "On" : "Off"}
+                            <span className={spoken_cls}>
+                                {spoken_lbl}
                             </span>
                         </button>
 
@@ -212,8 +225,8 @@ def:pub OpenAEyeApp() -> JsxElement {
                                 <span className="block text-sm font-semibold text-foreground">Vibration alerts</span>
                                 <span className="block text-xs text-muted-foreground">Useful for pocket or noisy-environment testing.</span>
                             </span>
-                            <span className={vibration_alerts ? "rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300" : "rounded-full bg-slate-700/60 px-3 py-1 text-xs font-semibold text-slate-300"}>
-                                {vibration_alerts ? "On" : "Off"}
+                            <span className={vibration_cls}>
+                                {vibration_lbl}
                             </span>
                         </button>
                     </div>
