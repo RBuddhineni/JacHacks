@@ -11,7 +11,10 @@ def:pub OpenAEyeApp() -> JsxElement {
     has alert_active: bool = False;
     has alert_time: int = 0;
     has status_text: str = "Starting…";
-    has last_scan_ms: int = 0;
+    has last_complete_ms: int = 0;
+    has scan_busy: bool = False;
+    has last_speech_ms: int = 0;
+    has last_speech_tier: int = 0;
 
     def record_score(score: int) -> None {
         new_hist = prox_history + [score];
@@ -19,21 +22,22 @@ def:pub OpenAEyeApp() -> JsxElement {
         prox_history = new_hist;
     }
 
-    def should_alert(score: int) -> bool {
-        # Imminent: always warn (no trend gate — model may jump straight to 4).
-        if score >= 4 { return True; }
-        if score < 3 { return False; }
-        # Near (3): need at least one prior frame so we do not fire on a single glitch.
-        if len(prox_history) < 2 { return False; }
-        prev = prox_history[:-1];
-        for s in prev {
-            if s >= 2 { return True; }
-        }
-        # Any prior "far" (1+) plus current near (3) counts as approach (fixes 0→1→3 jumps).
-        for s in prev {
-            if s >= 1 { return True; }
-        }
-        return False;
+    def hazard_tier(score: int) -> int {
+        if score >= 4 { return 4; }
+        if score >= 3 { return 3; }
+        if score >= 2 { return 2; }
+        return 0;
+    }
+
+    def should_speak_hazard(tier: int) -> bool {
+        now = Date.now();
+        if tier <= 0 { return False; }
+        if tier > last_speech_tier { return True; }
+        gap = 4500;
+        if tier >= 4 { gap = 900; }
+        elif tier >= 3 { gap = 1600; }
+        if now - last_speech_ms < gap { return False; }
+        return True;
     }
 
     async def acquire_camera_stream() -> any {
@@ -75,6 +79,10 @@ def:pub OpenAEyeApp() -> JsxElement {
             alert_active = False;
             prox_score = 0;
             prox_label = "Clear";
+            last_complete_ms = 0;
+            scan_busy = False;
+            last_speech_ms = 0;
+            last_speech_tier = 0;
             status_text = "Live";
             monitoring = True;
             # Prime speech (helps some mobile browsers deliver the first alert TTS).
@@ -96,28 +104,33 @@ def:pub OpenAEyeApp() -> JsxElement {
     }
 
     async def run_scan() -> None {
-        now = Date.now();
-        if now - last_scan_ms < 500 { return; }
-        last_scan_ms = now;
+        if scan_busy { return; }
+        tick = Date.now();
+        if tick - last_complete_ms < 140 { return; }
 
         video = document.getElementById("oe-video");
         canvas = document.getElementById("oe-canvas");
         if not video or video.readyState < 2 { return; }
 
-        w = 320;
-        h = 240;
+        w = 256;
+        h = 192;
         canvas.width = w;
         canvas.height = h;
         ctx = canvas.getContext("2d");
         ctx.drawImage(video, 0, 0, w, h);
-        b64 = canvas.toDataURL("image/jpeg", 0.65).split(",")[1];
+        b64 = canvas.toDataURL("image/jpeg", 0.52).split(",")[1];
 
+        scan_busy = True;
+        result = None;
         try {
             result = await analyze_frame(b64);
         } except Exception {
             console.error("OpenAEye: vision request failed (check server logs and OPENROUTER_API_KEY / model config).");
-            return;
         }
+        scan_busy = False;
+        last_complete_ms = Date.now();
+
+        if result is None { return; }
 
         score = result["score"];
         label = result["label"];
@@ -127,29 +140,32 @@ def:pub OpenAEyeApp() -> JsxElement {
         prox_score = score;
         prox_label = label;
 
-        if alert_active and Date.now() - alert_time > 3000 {
-            alert_active = False;
-        }
-
-        if should_alert(score) {
+        tier = hazard_tier(score);
+        if tier >= 2 {
             alert_active = True;
             alert_time = Date.now();
-            alert_count = alert_count + 1;
-            msg = "Stop now, obstacle ahead";
-            if score < 4 { msg = "Stop, obstacle ahead"; }
-            window.speechSynthesis.cancel();
-            utt = SpeechSynthesisUtterance(msg);
-            utt.rate = 1.1;
-            utt.volume = 1.0;
-            window.speechSynthesis.speak(utt);
+            if should_speak_hazard(tier) {
+                alert_count = alert_count + 1;
+                msg = "Caution, something ahead";
+                if tier >= 4 { msg = "Stop now, obstacle ahead"; }
+                elif tier >= 3 { msg = "Slow down, obstacle close"; }
+                window.speechSynthesis.cancel();
+                utt = SpeechSynthesisUtterance(msg);
+                utt.rate = 1.25;
+                utt.volume = 1.0;
+                window.speechSynthesis.speak(utt);
+                last_speech_ms = Date.now();
+                last_speech_tier = tier;
+            }
         } else {
-            if score < 3 { alert_active = False; }
+            alert_active = False;
+            last_speech_tier = 0;
         }
     }
 
     can with [monitoring] entry {
         if not monitoring { return; }
-        interval_id = setInterval(run_scan, 500);
+        interval_id = setInterval(run_scan, 100);
         def cleanup() -> None {
             clearInterval(interval_id);
         }
@@ -171,6 +187,9 @@ def:pub OpenAEyeApp() -> JsxElement {
         alert_active = False;
         prox_score = 0;
         prox_label = "Clear";
+        scan_busy = False;
+        last_speech_ms = 0;
+        last_speech_tier = 0;
         status_text = "Stopped";
     }
 
@@ -221,13 +240,22 @@ def:pub OpenAEyeApp() -> JsxElement {
                         <div className={live_cls}>
                             <span className="block">{live_txt}</span>
                         </div>
-                        {alert_active and (
+                        {alert_active and prox_score >= 3 and (
                             <div
                                 className="max-w-[min(100%,11rem)] rounded-2xl border border-rose-400/50 bg-rose-600/90 px-3 py-2 text-right text-[11px] font-bold leading-snug text-white shadow-lg backdrop-blur-md"
                                 role="status"
                                 aria-live="assertive"
                             >
                                 Obstacle — stop
+                            </div>
+                        )}
+                        {alert_active and prox_score == 2 and (
+                            <div
+                                className="max-w-[min(100%,11rem)] rounded-2xl border border-amber-400/45 bg-amber-600/85 px-3 py-2 text-right text-[11px] font-bold leading-snug text-white shadow-lg backdrop-blur-md"
+                                role="status"
+                                aria-live="polite"
+                            >
+                                Caution ahead
                             </div>
                         )}
                     </div>
