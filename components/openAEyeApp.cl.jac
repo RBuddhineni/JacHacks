@@ -20,11 +20,18 @@ def:pub OpenAEyeApp() -> JsxElement {
     }
 
     def should_alert(score: int) -> bool {
+        # Imminent: always warn (no trend gate — model may jump straight to 4).
+        if score >= 4 { return True; }
         if score < 3 { return False; }
+        # Near (3): need at least one prior frame so we do not fire on a single glitch.
         if len(prox_history) < 2 { return False; }
         prev = prox_history[:-1];
         for s in prev {
             if s >= 2 { return True; }
+        }
+        # Any prior "far" (1+) plus current near (3) counts as approach (fixes 0→1→3 jumps).
+        for s in prev {
+            if s >= 1 { return True; }
         }
         return False;
     }
@@ -70,6 +77,13 @@ def:pub OpenAEyeApp() -> JsxElement {
             prox_label = "Clear";
             status_text = "Live";
             monitoring = True;
+            # Prime speech (helps some mobile browsers deliver the first alert TTS).
+            try {
+                window.speechSynthesis.cancel();
+                window.speechSynthesis.speak(SpeechSynthesisUtterance(""));
+            } except Exception {
+                noop = 0;
+            }
         } except Exception {
             camera_denied = True;
             monitoring = False;
@@ -98,7 +112,13 @@ def:pub OpenAEyeApp() -> JsxElement {
         ctx.drawImage(video, 0, 0, w, h);
         b64 = canvas.toDataURL("image/jpeg", 0.65).split(",")[1];
 
-        result = await analyze_frame(b64);
+        try {
+            result = await analyze_frame(b64);
+        } except Exception {
+            console.error("OpenAEye: vision request failed (check server logs and OPENROUTER_API_KEY / model config).");
+            return;
+        }
+
         score = result["score"];
         label = result["label"];
 
@@ -115,14 +135,13 @@ def:pub OpenAEyeApp() -> JsxElement {
             alert_active = True;
             alert_time = Date.now();
             alert_count = alert_count + 1;
-            if not window.speechSynthesis.speaking {
-                msg = "Stop now, obstacle ahead";
-                if score < 4 { msg = "Stop, obstacle ahead"; }
-                utt = SpeechSynthesisUtterance(msg);
-                utt.rate = 1.1;
-                utt.volume = 1.0;
-                window.speechSynthesis.speak(utt);
-            }
+            msg = "Stop now, obstacle ahead";
+            if score < 4 { msg = "Stop, obstacle ahead"; }
+            window.speechSynthesis.cancel();
+            utt = SpeechSynthesisUtterance(msg);
+            utt.rate = 1.1;
+            utt.volume = 1.0;
+            window.speechSynthesis.speak(utt);
         } else {
             if score < 3 { alert_active = False; }
         }
